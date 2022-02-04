@@ -3,8 +3,9 @@ namespace App;
 
 use App\Contract\ReaderInterface;
 use App\Contract\OfferCollectionInterface;
-use App\ConvertJsonToData;
+use App\Util\ConvertJsonToData;
 use App\Util\Log;
+use App\ProductList;
 
 class GetJsonRequest implements ReaderInterface
 {
@@ -16,14 +17,15 @@ class GetJsonRequest implements ReaderInterface
     public function read(string $input): OfferCollectionInterface
     {
         $converter = new ConvertJsonToData($input);
+        $data = [];
 
         try {
-            $converter->jsonToArray();
+            $data = $converter->jsonToArray();
         } catch (\JsonException $e) {
             // write to log
             Log::error(Log::formatFromException($e));
         }
 
-        return $converter;
+        return new ProductList($data);
     }
 }
