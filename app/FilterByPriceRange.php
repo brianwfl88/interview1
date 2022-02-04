@@ -18,15 +18,20 @@ class FilterByPriceRange extends FilterIterator
 
     public function accept(): bool
     {
-        return $this->current()->getPrice() >= $this->start_price && $this->end_price <= $this->current()->getPrice();
+        return (
+            $this->end_price >= $this->start_price
+            && $this->current()->getPrice() >= $this->start_price
+            && $this->end_price >= $this->current()->getPrice()
+        );
     }
 
     public function setParam(array $param)
     {
-        if (empty($param[0]) === false
-            && empty($param[1]) === false
+        if (isset($param[0]) === true
+            && isset($param[1]) === true
             && is_numeric($param[0]) === true
-            && is_numeric($param[1]) === true) {
+            && is_numeric($param[1]) === true
+        ){
             $this->start_price = floatval($param[0]);
             $this->end_price = floatval($param[1]);
         } else {
