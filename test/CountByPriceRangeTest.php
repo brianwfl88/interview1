@@ -16,7 +16,7 @@ final class CountByPriceRangeTest extends TestCase
 
         $filter->setParam([12.00, 145.80]);
 
-        $this->assertEquals($filter->getCount(), 2);
+        $this->assertEquals($filter->getCount(), 1);
     }
 
     public function testParameterIsInvalid(): void
